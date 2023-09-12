@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>CONNECTABLE Login & Registration</title>
+</head>
+
+<body class="container mt-4" style="background-color: black;">
+  <h1 class="font-weight-bold text-uppercase mb-4" style="font-size: 70px ;">Welcome to Connectable!</h2>
+  <div class="row text-light">
+    <!-- ------------this is the account creation section------------ -->
+    <form action="/register" method="post" class="col dashboard-style">
+      {% with messages = get_flashed_messages(category_filter=['register']) %}
+      {% if messages %}
+      <div class="alert alert-danger" role="alert">
+        <strong>Incorrect Account Registration</strong>
+        {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+      <h2>Sign Up</h2>
+      <hr class="mb-4">
+      <p>First Name:</p>
+      <input type="text" class="form-control" name="first_name" >
+      <p>Last Name:</p>
+      <input type="text" class="form-control" name="last_name" >
+      <p>Email:</p>
+      <input type="text" class="form-control" name="email" >
+      <!--<p>Date of Birth:</p>
+      <input type="text" class="form-control" name="dob" > -->
+      <p>Password:</p>
+      <input type="password" class="form-control" name="password" >
+      <p>Confirm Password:</p>
+      <input type="password" class="form-control" name="password_confirm" >
+      <br>
+      <input type="submit" name="Submit" value="Register" class="btn btn-success btn-block">
+    </form>
+
+    <!-- ------------this is the login section------------ -->
+    <form action="/login" method="post" class="col dashboard-style">
+      {% with messages = get_flashed_messages(category_filter=['login']) %}
+      {% if messages %}
+      <div class="alert alert-danger" role="alert">
+        <strong>Incorrect Login Attempt</strong>
+        {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+      <h2>Login</h2>
+      <hr class="mb-4">
+      <p>Email:</p>
+      <input type="text" class="form-control" name="email" >
+      <p>Password:</p>
+      <input type="password" class="form-control" name="password" >
+      <br>
+      <input type="submit" value="Login" class="btn btn-primary btn-block">
+    </form>
+
+  </div>
+</body>
+
+</html>

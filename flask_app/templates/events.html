@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>View</title>
+</head>
+
+<body style="background-color: black;"></bodystyle>
+
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/dashboard">CONNECTABLE</a>
+      <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/event/dashboard">Add New Event</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/browse">Discover Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card col-10 mx-auto my-5 col" style="outline: 8px solid  rgba(66, 220, 255, 0.671)">
+      <div class="card-body">
+        <h1 class="card-title text-dark text-uppercase" style="font-weight:bolder;">{{event.name}}</h1>
+        <p>Location: {{ event.location }}</p>
+        <p>Date: {{ event.date_made }}</p>
+        <p class="card-text">Description: {{event.description}}</p>
+
+        <p class="card-text">Available Slots: {{ event.attendees }}/{{ event.slots }}</p>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

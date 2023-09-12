@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>Your Dashboard</title>
+</head>
+
+<body style="background-color:black">
+  <!--background-color:rgb(23, 28, 38)-->
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/dashboard" style="text-shadow: rgb(0, 148, 171) 1px 2px 2px ; font-weight:bold">CONNECTABLE</a>
+      <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/event/dashboard">Add New Event</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/browse">Discover Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="mt-4  text-uppercase font-weight-bold">Welcome, {{ user.first_name }}!</h1>
+    <h4 class="mt-4 text-light">Here are your joined events:</h4>
+    <table class="table table-hover col dashboard-style table-dark">
+      <thead>
+        <tr>
+          <th>Event Name</th>
+          <th>Location</th>
+          <th>Slots</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for event in all_events %}
+        <tr>
+          <td>{{event.name}}</td>
+          <td>{{event.location}}</td>
+          <td>{{ event.attendees }}/{{ event.slots }}</td>
+          <td>{{event.date_made}}</td>
+          <td>
+
+            <form method="post" action="/unjoin">
+            <a href="/event/{{event.id}}" class="btn btn-info">View Event</a>
+            <input type="hidden" name="event_id" value="{{event.id}}">
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <button class="btn btn-warning" type="submit">Unjoin</button>
+
+
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h4 class="mt-5 text-light">Here are your created events:</h4>
+
+    <table class="table table-hover col dashboard-style table-dark">
+      <thead>
+        <tr>
+          <th>Event Name</th>
+          <th>Location</th>
+          <th>Slots</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for event in events %}
+        <tr>
+          <td>{{event.name}}</td>
+          <td>{{event.location}}</td>
+          <td>{{ event.attendees }}/{{ event.slots }}</td>
+          <td>{{event.date_made}}</td>
+          <td>
+            <a href="/event/{{event.id}}" class="btn btn-info">View Event</a>
+            {% if event.user_id == session.user_id %}
+            <a href="/event/update/form/{{event.id}}" class="btn btn-primary">Edit</a>
+            <a href="/event/delete/{{event.id}}" class="btn btn-warning">Delete</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+</html>

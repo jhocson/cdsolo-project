@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>Edit Event</title>
+</head>
+
+<body style="background-color: black;">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/dashboard">CONNECTABLE</a>
+      <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link" href="/event/dashboard">Add New Event</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/browse">All Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mt-5 p-3 rounded text-light" style="background-color:  rgba(66, 220, 255, 0.671);">
+        <form action="/event/update/{{ event.id }}" method="post" class="col dashboard-style">
+          <h2>Update Your Event: {{ event.name }}</h2>
+          {% with messages = get_flashed_messages(category_filter=['event']) %}
+          {% if messages %}
+          <div class="alert alert-danger" role="alert">
+            <strong>Incorrect</strong>
+            {% for message in messages %}
+            <p>{{message}}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% endwith %}
+          <hr class="mb-4">
+          <p class="row">Name:</p>
+          <input type="text" class="form-control" name="name" value="{{ event.name }}">
+
+          <p class="row">Location:</p>
+          <input type="text" class="form-control" name="location" value="{{ event.location }}">          
+
+          <p class="row">Event Date:</p>
+          <input type="date" name="date_made" class="form-control" value="{{ event.date_made.strftime('%Y-%m-%d') }}">
+
+          <p class="row">Event Time:</p>
+          <input type="time" name="time_made" class="form-control" value="{{ event.date_made.strftime('%H:%M') }}">
+
+          <p class="row">Number of Slots:</p>
+          <input type="number" name="slots" value="{{ event.slots }}">
+
+          <p class="row">Description:</p>
+          <textarea name="description" class="form-control">{{ event.description }}</textarea>
+
+          <br>
+          <input type="submit" name="Submit" value="UPDATE" class="btn btn-primary btn-block">
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

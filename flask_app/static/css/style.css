@@ -1,0 +1,10 @@
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color:rgba(0, 208, 255, 0.671);
+}
+
+h1 {
+    color: black;
+	font-size: 40px;
+
+	-webkit-text-stroke: rgba(66, 220, 255, 0.671) 2px;
+}

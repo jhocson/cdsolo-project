@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>Discover Events</title>
+</head>
+
+<body style="background-color: black;">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/dashboard">CONNECTABLE</a>
+      <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/event/dashboard">Add New Event</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/browse">Discover Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="mt-4 font-weight-bold text-uppercase text-light">Let's Connect! Discover New Events:</h1>
+
+    <table class="table table-hover bg-dark text-light mt-4" id="table">
+      <thead>
+        <tr>
+          <th>Event Name</th>
+          <th>Location</th>
+          <th>Slots</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for event in events %}
+        <tr>
+          <td>{{event.name}}</td>
+          <td>{{event.location}}</td>
+          <td>{{ event.attendees }}/{{ event.slots }}</td>
+          <td>{{event.date_made}}</td>
+          <td>
+
+
+            <form method="post" action="/join">
+              <a href="/event/{{event.id}}" class="btn btn-info">View Event</a>
+              {% if event.attendees == event.slots %}
+              <a class="btn btn-secondary text-light">Full</a>
+              {% endif %}
+              {% if event.attendees < event.slots %}
+            <input type="hidden" name="event_id" value="{{event.id}}">
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <button class="btn btn-warning" type="submit">Join</button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+</html>
